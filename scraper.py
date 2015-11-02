@@ -77,6 +77,7 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
+    Description= Description[1]
     Description=BeautifulSoup(Description).text
     Description=suittext(Description)
     return Description
@@ -139,7 +140,7 @@ def scrap_live(url):
           "Procurement Process":unicode(Procurement_Process),\
           "Estimated Value TEXT DESCRIPTION":unicode(Estimated_Value_TEXT_DESCRIPTION),\
           "Category":unicode(Category),\
-          "SPV codes":unicode(CPV_codes),\
+          "CPV codes":unicode(CPV_codes),\
           "Suitable for SME":unicode(Suitable_for_SME),\
           "DOCUMENT AVAILABLE UNTIL":unicode(DOCUMENT_AVAILABLE_UNTIL),\
           "SUBMISSION RETURN BY":unicode(SUBMISSION_RETURN_BY),\
@@ -172,9 +173,9 @@ def scrap_awarded(url):
     except:
         Enddate = "none"
     try:
-        CVP_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
+        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
     except:
-        CVP_codes ="none"
+        CPV_codes ="none"
 
     Date_awarded= htmltext.find('div',{"class":"highlight_date_body"}).text
     Awarded_to= htmltext.find('div',{"class":"highlight_contact_hd"}).findNext('p').contents
@@ -192,7 +193,7 @@ def scrap_awarded(url):
           "Description":unicode(Description),\
           "Start Date":unicode(Startdate),\
           "End Date":unicode(Enddate),\
-          "CVP Codes":unicode(CVP_codes),\
+          "CPV Codes":unicode(CPV_codes),\
           "Date Awarded":unicode(Date_awarded),\
           "Awarded To":unicode(Awarded_to)}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
@@ -219,9 +220,9 @@ def scrap_recurring(url):
     except:
         Option_to_extend="none"
     try:
-        CVP_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
+        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
     except :
-        CVP_codes="none"
+        CPV_codes="none"
 
     EXISITING_CONTRACT_END_DATE= htmltext.find('div',{"class":"highlight_date_body"}).text
 
@@ -235,7 +236,7 @@ def scrap_recurring(url):
           "Description":unicode(Description),\
           "Contract Type":unicode(Contract_type),\
           "Option to extend":unicode(Option_to_extend),\
-          "CVP Codes":unicode(CVP_codes),\
+          "CPV Codes":unicode(CPV_codes),\
           "EXISITING CONTRACT END DATE":EXISITING_CONTRACT_END_DATE}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
