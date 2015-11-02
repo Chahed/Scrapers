@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib
+from urllib import urlopen
 import scraperwiki
 
 def convertirUrl(url):
@@ -226,14 +226,7 @@ def scrap_recurring(url):
 
     EXISITING_CONTRACT_END_DATE= htmltext.find('div',{"class":"highlight_date_body"}).text
 
-    print  ("REFERENCE="+REFERENCE)
-    print  ("Title="+Title)
-    print ("Awarding body="+Awarding_body)
-    print ("Description="+Description)
-    print("Contact_type="+Contract_type)
-    print("Extendoptions="+Option_to_extend)
-    print("Cvp="+CVP_codes)
-    print("ExistingDate="+EXISITING_CONTRACT_END_DATE)
+   
 
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
