@@ -77,7 +77,6 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description= Description[1].encode('ascii','ignore')
     Description=BeautifulSoup(Description).text
     Description=suittext(Description)
     return Description
@@ -157,7 +156,7 @@ def scrap_awarded(url):
     REFERENCE= Reference(htmltext)
 
     Title =htmltext.find('div',{"class":"contract_hd_left"}).findNext('h1').contents
-    Title=str(Title).encode('ascii','ignore')
+    Title=str(Title)
     Title=BeautifulSoup(Title).text
     Title=suittext(Title)
     Awarding_body= Awarding_body_fc(htmltext)
@@ -179,7 +178,7 @@ def scrap_awarded(url):
 
     Date_awarded= htmltext.find('div',{"class":"highlight_date_body"}).text
     Awarded_to= htmltext.find('div',{"class":"highlight_contact_hd"}).findNext('p').contents
-    Awarded_to=str(Awarded_to).encode('ascii','ignore')
+    Awarded_to=str(Awarded_to)
     Awarded_to=BeautifulSoup(Awarded_to).text
     Awarded_to=suittext(Awarded_to)
 
@@ -205,7 +204,7 @@ def scrap_recurring(url):
     REFERENCE= Reference(htmltext)
 
     Title =htmltext.find('div',{"class":"contract_hd_left"}).findNext('h1').contents
-    Title=str(Title).encode('ascii','ignore')
+    Title=str(Title)
     Title=BeautifulSoup(Title).text
     Title=suittext(Title)
     Awarding_body= Awarding_body_fc(htmltext)
