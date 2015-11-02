@@ -145,7 +145,13 @@ def scrap_live(url):
           "DOCUMENT AVAILABLE UNTIL":unicode(DOCUMENT_AVAILABLE_UNTIL),\
           "SUBMISSION RETURN BY":unicode(SUBMISSION_RETURN_BY),\
           "Contact Details":unicode(Contact_Details),\
-          "Email":unicode(Email)}
+          "Email":unicode(Email),\
+          "Option to extend":unicode(),\
+          "EXISITING CONTRACT END DATE":unicode() ,\
+          "Start Date":unicode(),\
+          "End Date":unicode(),\
+          "Date Awarded":unicode(),\
+          "Awarded To":unicode()}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
@@ -185,15 +191,27 @@ def scrap_awarded(url):
 
 
 
+   
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
           "Title":unicode(Title),\
           "Awarding body":unicode(Awarding_body),\
           "Description":unicode(Description),\
+          "Contract Type":unicode(""),\
+          "Procurement Process":unicode(""),\
+          "Estimated Value TEXT DESCRIPTION":unicode(""),\
+          "Category":unicode(""),\
+          "CPV codes":unicode(CPV_codes),\
+          "Suitable for SME":unicode(""),\
+          "DOCUMENT AVAILABLE UNTIL":unicode(""),\
+          "SUBMISSION RETURN BY":unicode(""),\
+          "Contact Details":unicode(""),\
+          "Email":unicode(""),\
+          "Option to extend":unicode(""),\
+          "EXISITING CONTRACT END DATE":unicode(""),\
           "Start Date":unicode(Startdate),\
           "End Date":unicode(Enddate),\
-          "CPV Codes":unicode(CPV_codes),\
           "Date Awarded":unicode(Date_awarded),\
           "Awarded To":unicode(Awarded_to)}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
@@ -212,9 +230,9 @@ def scrap_recurring(url):
 
     Description= Detail_left_fc(htmltext)
     try:
-        Contract_type =BeautifulSoup(Table(htmltext,0)).text
+        Contract_Type =BeautifulSoup(Table(htmltext,0)).text
     except:
-        Contract_type="none"
+        Contract_Type="none"
     try:
         Option_to_extend =suittext(BeautifulSoup(Table(htmltext,1)).text)
     except:
@@ -227,19 +245,28 @@ def scrap_recurring(url):
     EXISITING_CONTRACT_END_DATE= htmltext.find('div',{"class":"highlight_date_body"}).text
 
    
-
-    data={"ID":unicode(ID), \
+     data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
           "Title":unicode(Title),\
           "Awarding body":unicode(Awarding_body),\
           "Description":unicode(Description),\
-          "Contract Type":unicode(Contract_type),\
+          "Contract Type":unicode(Contract_Type),\
+          "Procurement Process":unicode(""),\
+          "Estimated Value TEXT DESCRIPTION":unicode(""),\
+          "Category":unicode(""),\
+          "CPV codes":unicode(CPV_codes),\
+          "Suitable for SME":unicode(""),\
+          "DOCUMENT AVAILABLE UNTIL":unicode(""),\
+          "SUBMISSION RETURN BY":unicode(""),\
+          "Contact Details":unicode(""),\
+          "Email":unicode(""),\
           "Option to extend":unicode(Option_to_extend),\
-          "CPV Codes":unicode(CPV_codes),\
-          "EXISITING CONTRACT END DATE":EXISITING_CONTRACT_END_DATE}
-    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
-
+          "EXISITING CONTRACT END DATE":unicode(EXISITING_CONTRACT_END_DATE),\
+          "Start Date":unicode(""),\
+          "End Date":unicode(""),\
+          "Date Awarded":unicode(""),\
+          "Awarded To":unicode("")}
 
 
 def extract_data(url):
