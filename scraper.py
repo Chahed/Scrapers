@@ -195,7 +195,8 @@ def scrap_awarded(url):
     Awarded_to=BeautifulSoup(Awarded_to).text
     Awarded_to=suittext(Awarded_to)
 
-
+    print ("Description="+Description)
+   
 
    
     data={"ID":unicode(ID), \
@@ -277,7 +278,7 @@ def scrap_recurring(url):
 
 
 def extract_data(url):
-    l = ["live","awarded","recurring"]
+    l = ["awarded","recurring"]
     for el in l:
         urltry=url
         if el =="awarded":
