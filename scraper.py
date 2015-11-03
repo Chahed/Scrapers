@@ -246,27 +246,27 @@ def scrap_recurring(url):
 
    
      data={"ID":unicode(ID), \
-          "Url":unicode(url),\
-          "REFERENCE":unicode(REFERENCE),\
-          "Title":unicode(Title),\
-          "Awarding body":unicode(Awarding_body),\
-          "Description":unicode(Description),\
-          "Contract Type":unicode(Contract_Type),\
-          "Procurement Process":unicode(""),\
-          "Estimated Value TEXT DESCRIPTION":unicode(""),\
-          "Category":unicode(""),\
-          "CPV codes":unicode(CPV_codes),\
-          "Suitable for SME":unicode(""),\
-          "DOCUMENT AVAILABLE UNTIL":unicode(""),\
-          "SUBMISSION RETURN BY":unicode(""),\
-          "Contact Details":unicode(""),\
-          "Email":unicode(""),\
-          "Option to extend":unicode(Option_to_extend),\
-          "EXISITING CONTRACT END DATE":unicode(EXISITING_CONTRACT_END_DATE),\
-          "Start Date":unicode(""),\
-          "End Date":unicode(""),\
-          "Date Awarded":unicode(""),\
-          "Awarded To":unicode("")}
+           "Url":unicode(url),\
+           "REFERENCE":unicode(REFERENCE),\
+           "Title":unicode(Title),\
+           "Awarding body":unicode(Awarding_body),\
+           "Description":unicode(Description),\
+           "Contract Type":unicode(Contract_Type),\
+           "Procurement Process":unicode(""),\
+           "Estimated Value TEXT DESCRIPTION":unicode(""),\
+           "Category":unicode(""),\
+           "CPV codes":unicode(CPV_codes),\
+           "Suitable for SME":unicode(""),\
+           "DOCUMENT AVAILABLE UNTIL":unicode(""),\
+           "SUBMISSION RETURN BY":unicode(""),\
+           "Contact Details":unicode(""),\
+           "Email":unicode(""),\
+           "Option to extend":unicode(Option_to_extend),\
+           "EXISITING CONTRACT END DATE":unicode(EXISITING_CONTRACT_END_DATE),\
+           "Start Date":unicode(""),\
+           "End Date":unicode(""),\
+           "Date Awarded":unicode(""),\
+           "Awarded To":unicode("")}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
