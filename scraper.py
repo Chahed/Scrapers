@@ -267,6 +267,7 @@ def scrap_recurring(url):
           "End Date":unicode(""),\
           "Date Awarded":unicode(""),\
           "Awarded To":unicode("")}
+    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
 def extract_data(url):
