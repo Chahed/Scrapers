@@ -77,7 +77,7 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description= Description[1]
+    Description=str(Description[1])
     Description=BeautifulSoup(Description).text
     Description=suittext(Description)
     return Description
@@ -90,7 +90,7 @@ def Table(htmltext,id) :
 def Contact(htmltext):
     Contact_Details= str(htmltext.find('div',{"class":"highlight_contact_bd"}).findNext('p').contents)
     c=Contact_Details.split('<br/>')
-    m= c[0]+c[1]
+    m= str(c[0])+str(c[1])
     m=BeautifulSoup(m).text
     m=suittext(m)
     return m
@@ -113,9 +113,11 @@ def scrap_live(url):
 
     Contract_Type =BeautifulSoup(Table(htmltext,0)).text
     Procurement_Process =suittext(BeautifulSoup(Table(htmltext,1)).text)
-    Estimated_Value_TEXT_DESCRIPTION =suittext(Table(htmltext,2))
+    Estimated_Value_TEXT_DESCRIPTION =suittext(BeautifulSoup(Table(htmltext,2)).text)
     Cat =suittext(Table(htmltext,3))
     Category= (BeautifulSoup(Cat).text).split(',')
+    for i in Category :
+        i= suittext(str(i))
     Category=str(Category)
     CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text)
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
@@ -127,6 +129,10 @@ def scrap_live(url):
 
     DOCUMENT_AVAILABLE_UNTIL= suittext(BeautifulSoup(Document[0].getText()).text)
     SUBMISSION_RETURN_BY= suittext(BeautifulSoup(Document[0].getText()).text)
+    
+    
+    print ("Description="+Description)
+    print("Contact_Details="+Contract_Details)
 
 
 
@@ -271,7 +277,7 @@ def scrap_recurring(url):
 
 
 def extract_data(url):
-    l = ["awarded","recurring","live"]
+    l = ["live","awarded","recurring"]
     for el in l:
         urltry=url
         if el =="awarded":
