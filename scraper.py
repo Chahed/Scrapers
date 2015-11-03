@@ -77,7 +77,7 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description=str(Description[1])
+    Description=Description[1]
     Description=BeautifulSoup(Description).text
     Description=suittext(Description)
     return Description
@@ -90,7 +90,7 @@ def Table(htmltext,id) :
 def Contact(htmltext):
     Contact_Details= str(htmltext.find('div',{"class":"highlight_contact_bd"}).findNext('p').contents)
     c=Contact_Details.split('<br/>')
-    m= str(c[0])+str(c[1])
+    m= c[0]+c[1]
     m=BeautifulSoup(m).text
     m=suittext(m)
     return m
