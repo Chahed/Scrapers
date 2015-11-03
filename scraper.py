@@ -116,8 +116,6 @@ def scrap_live(url):
     Estimated_Value_TEXT_DESCRIPTION =suittext(BeautifulSoup(Table(htmltext,2)).text)
     Cat =suittext(Table(htmltext,3))
     Category= (BeautifulSoup(Cat).text).split(',')
-    for i in Category :
-        i= suittext(str(i))
     Category=str(Category)
     CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text)
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
@@ -129,7 +127,6 @@ def scrap_live(url):
 
     DOCUMENT_AVAILABLE_UNTIL= suittext(BeautifulSoup(Document[0].getText()).text)
     SUBMISSION_RETURN_BY= suittext(BeautifulSoup(Document[0].getText()).text)
-    
     
     print ("Description="+Description)
     print("Contact_Details="+Contract_Details)
