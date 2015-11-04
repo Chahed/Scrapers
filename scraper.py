@@ -341,7 +341,7 @@ def extract_data(url,Id):
                     if el=="live":
                         Id=Id+1
                         scrap_live(j,Id)
-                        print(Id+" live "+j)
+                        print(str(Id)+" live "+j)
                     else :
                         if el=="recurring":
                             Id=Id+1
