@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from urllib import 
+from urllib import urlopen
 import scraperwiki
 
 def convertirUrl(url):
