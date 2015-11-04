@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from urllib import urlopen
+from urllib.request import urlopen
 import scraperwiki
 
 def convertirUrl(url):
@@ -121,7 +121,7 @@ def scrap_live(url):
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
 
     Document =htmltext.findAll('div',{"class":"highlight_date_body"})
-    Contact_Details=suittext(Contact(htmltext))
+    Contract_Details=suittext(Contact(htmltext))
 
     Email = htmltext.find('div',{"class":"c_email"}).text
 
