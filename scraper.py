@@ -77,7 +77,7 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description=Description[1].encode('ascii','ignore')
+    Description=Description[1]
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
@@ -88,7 +88,7 @@ def Description_awarded(htmltext):
     a=Detail_left.split('<h4>')
     Des=a[1].split('</h4>')
     Description=Des[1].split('<table class="additional_data">')
-    Description=Description[0].encode('ascii','ignore')
+    Description=Description[0]
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
