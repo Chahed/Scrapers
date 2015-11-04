@@ -180,7 +180,7 @@ def scrap_live(url):
           "Date Awarded":unicode(),\
           "Date Awarded Clean":unicode(),\
           "Awarded To":unicode()}
-    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['REFERENCE'], data=data)
 
 
 
@@ -246,7 +246,7 @@ def scrap_awarded(url):
           "Date Awarded":unicode(Date_awarded),\
           "Date Awarded Clean":unicode(Date_awarded_clean),\
           "Awarded To":unicode(Awarded_to)}
-    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['REFERENCE'], data=data)
 
 
    
@@ -309,7 +309,7 @@ def scrap_recurring(url):
           "Date Awarded":unicode(""),\
           "Date Awarded Clean":unicode(),\
           "Awarded To":unicode("")}
-    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['REFERENCE'], data=data)
 
 
 
