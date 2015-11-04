@@ -77,10 +77,23 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description=Description[1]
+    Description=Description[1].encode('ascii','ignore')
     Description=BeautifulSoup(Description).text
+    Description=Description.strip(', ')
     Description=suittext(Description)
     return Description
+
+def Description_awarded(htmltext):
+    Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
+    a=Detail_left.split('<h4>')
+    Des=a[1].split('</h4>')
+    Description=Des[1].split('<table class="additional_data">')
+    Description=Description[0].encode('ascii','ignore')
+    Description=BeautifulSoup(Description).text
+    Description=Description.strip(', ')
+    Description=suittext(Description)
+    return Description
+
 
 def Table(htmltext,id) :
     Tr=htmltext.find('table',{"class":"additional_data"}).findNext('tbody')
@@ -93,7 +106,17 @@ def Contact(htmltext):
     m= c[0]+c[1]
     m=BeautifulSoup(m).text
     m=suittext(m)
-    return m
+    return m.strip(', ')
+
+def date(dat):
+    d=dat.split(' ')
+    Date= d[0]+" "+d[1]+" "+d[2]
+    return Date
+
+def dateClean(dat):
+    d=dat.split(' ')
+    Date= d[2]+"-"+d[1]+"-"+d[0]
+    return Date
 
 
 
@@ -116,8 +139,8 @@ def scrap_live(url):
     Estimated_Value_TEXT_DESCRIPTION =suittext(BeautifulSoup(Table(htmltext,2)).text)
     Cat =suittext(Table(htmltext,3))
     Category= (BeautifulSoup(Cat).text).split(',')
-    Category=str(Category)
-    CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text)
+    Category=suittext(str(Category))
+    CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text).strip(', ')
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
 
     Document =htmltext.findAll('div',{"class":"highlight_date_body"})
@@ -125,13 +148,11 @@ def scrap_live(url):
 
     Email = htmltext.find('div',{"class":"c_email"}).text
 
-    DOCUMENT_AVAILABLE_UNTIL= suittext(BeautifulSoup(Document[0].getText()).text)
-    SUBMISSION_RETURN_BY= suittext(BeautifulSoup(Document[0].getText()).text)
-    
-    print ("Description="+Description)
-    print("Contact_Details="+Contract_Details)
+    DOCUMENT_AVAILABLE_UNTIL= date(BeautifulSoup(Document[0].getText()).text)
+    SUBMISSION_RETURN_BY= date(BeautifulSoup(Document[1].getText()).text)
 
-
+    DOCUMENT_AVAILABLE_UNTIL_clean=dateClean(BeautifulSoup(Document[0].getText()).text)
+    SUBMISSION_RETURN_BY_clean= dateClean(BeautifulSoup(Document[1].getText()).text)
 
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
@@ -146,16 +167,22 @@ def scrap_live(url):
           "CPV codes":unicode(CPV_codes),\
           "Suitable for SME":unicode(Suitable_for_SME),\
           "DOCUMENT AVAILABLE UNTIL":unicode(DOCUMENT_AVAILABLE_UNTIL),\
+          "DOCUMENT AVAILABLE UNTIL clean":unicode( DOCUMENT_AVAILABLE_UNTIL_clean),\
           "SUBMISSION RETURN BY":unicode(SUBMISSION_RETURN_BY),\
-          "Contact Details":unicode(Contact_Details),\
+          "SUBMISSION RETURN BY clean":unicode(SUBMISSION_RETURN_BY_clean),\
+          "Contact Details":unicode(Contract_Details),\
           "Email":unicode(Email),\
           "Option to extend":unicode(),\
           "EXISITING CONTRACT END DATE":unicode() ,\
+          "EXISITING CONTRACT END DATE clean":unicode(""),\
           "Start Date":unicode(),\
           "End Date":unicode(),\
           "Date Awarded":unicode(),\
+          "Date Awarded Clean":unicode(),\
           "Awarded To":unicode()}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
+
+
 
 
 def scrap_awarded(url):
@@ -171,7 +198,7 @@ def scrap_awarded(url):
     Title=suittext(Title)
     Awarding_body= Awarding_body_fc(htmltext)
 
-    Description= Detail_left_fc(htmltext)
+    Description= Description_awarded(htmltext)
 
     try:
         Startdate =BeautifulSoup(Table(htmltext,0)).text
@@ -182,20 +209,17 @@ def scrap_awarded(url):
     except:
         Enddate = "none"
     try:
-        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
+        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text).strip(', ')
     except:
         CPV_codes ="none"
 
     Date_awarded= htmltext.find('div',{"class":"highlight_date_body"}).text
+    Date_awarded_clean=dateClean(Date_awarded)
     Awarded_to= htmltext.find('div',{"class":"highlight_contact_hd"}).findNext('p').contents
     Awarded_to=str(Awarded_to)
     Awarded_to=BeautifulSoup(Awarded_to).text
-    Awarded_to=suittext(Awarded_to)
+    Awarded_to=suittext(Awarded_to).strip(' ')
 
-    print ("Description="+Description)
-   
-
-   
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
@@ -209,16 +233,26 @@ def scrap_awarded(url):
           "CPV codes":unicode(CPV_codes),\
           "Suitable for SME":unicode(""),\
           "DOCUMENT AVAILABLE UNTIL":unicode(""),\
+          "DOCUMENT AVAILABLE UNTIL clean":unicode(""),\
           "SUBMISSION RETURN BY":unicode(""),\
+          "SUBMISSION RETURN BY clean":unicode(""),\
           "Contact Details":unicode(""),\
           "Email":unicode(""),\
           "Option to extend":unicode(""),\
           "EXISITING CONTRACT END DATE":unicode(""),\
+          "EXISITING CONTRACT END DATE clean":unicode(""),\
           "Start Date":unicode(Startdate),\
           "End Date":unicode(Enddate),\
           "Date Awarded":unicode(Date_awarded),\
+          "Date Awarded Clean":unicode(Date_awarded_clean),\
           "Awarded To":unicode(Awarded_to)}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
+
+
+   
+
+   
+
 
 def scrap_recurring(url):
     response = urlopen(url)
@@ -242,13 +276,13 @@ def scrap_recurring(url):
     except:
         Option_to_extend="none"
     try:
-        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text)
+        CPV_codes =suittext(BeautifulSoup(Table(htmltext,2)).text).strip(',')
     except :
         CPV_codes="none"
 
     EXISITING_CONTRACT_END_DATE= htmltext.find('div',{"class":"highlight_date_body"}).text
-
-   
+    EXISITING_CONTRACT_END_DATE_clean=dateClean(EXISITING_CONTRACT_END_DATE)
+    
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
@@ -262,20 +296,25 @@ def scrap_recurring(url):
           "CPV codes":unicode(CPV_codes),\
           "Suitable for SME":unicode(""),\
           "DOCUMENT AVAILABLE UNTIL":unicode(""),\
+          "DOCUMENT AVAILABLE UNTIL clean":unicode(""),\
           "SUBMISSION RETURN BY":unicode(""),\
+          "SUBMISSION RETURN BY clean":unicode(""),\
           "Contact Details":unicode(""),\
           "Email":unicode(""),\
           "Option to extend":unicode(Option_to_extend),\
           "EXISITING CONTRACT END DATE":unicode(EXISITING_CONTRACT_END_DATE),\
+          "EXISITING CONTRACT END DATE clean":unicode(EXISITING_CONTRACT_END_DATE_clean),\
           "Start Date":unicode(""),\
           "End Date":unicode(""),\
           "Date Awarded":unicode(""),\
+          "Date Awarded Clean":unicode(),\
           "Awarded To":unicode("")}
     scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
+
 def extract_data(url):
-    l = ["awarded","recurring"]
+    l = ["live","recurring","awarded"]
     for el in l:
         urltry=url
         if el =="awarded":
@@ -294,22 +333,23 @@ def extract_data(url):
             for j in List:
                 if el=="awarded":
                     scrap_awarded(j)
+                    print("awarded "+j)
                 else :
                     if el=="live":
                         scrap_live(j)
+                        print("live "+j)
                     else :
                         if el=="recurring":
                             scrap_recurring(j)
+                            print("recurring "+j)
 
 
 
 def main():
     urls=["http://www.sourcederbyshire.co.uk/","http://www.sourceleicestershire.co.uk/","http://www.sourcelincolnshire.co.uk/","http://www.sourcenorthamptonshire.co.uk/","http://www.sourcenottinghamshire.co.uk/","http://www.sourcerutland.co.uk/","http://www.sourcecambridgeshire.co.uk/"]
     for url in urls :
-        try:
             extract_data(url)
-        except:
-            pass
+
 
 
 if __name__ == '__main__':
