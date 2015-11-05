@@ -47,8 +47,6 @@ def suittext(text):
     text=text.replace("\"","")
     text=text.replace("  ","")
     text=text.replace("u\\n","")
-    text=text.replace("\\"," ")
-    
     text=text.replace("\\r"," ")
     text=text.replace("[","")
     text=text.replace("]","")
