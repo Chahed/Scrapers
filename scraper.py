@@ -81,7 +81,7 @@ def Detail_left_fc(htmltext):
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
-    Description=Description.encode('ascii','ignore')
+    Description=Description.strip('u')
     return Description
 
 def Description_awarded(htmltext):
@@ -93,7 +93,7 @@ def Description_awarded(htmltext):
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
-    Description=Description.encode('ascii','ignore')
+    Description=Description.strip('u')
     return Description
 
 
