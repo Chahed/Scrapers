@@ -155,6 +155,8 @@ def scrap_live(url):
 
     DOCUMENT_AVAILABLE_UNTIL_clean=dateClean(BeautifulSoup(Document[0].getText()).text)
     SUBMISSION_RETURN_BY_clean= dateClean(BeautifulSoup(Document[1].getText()).text)
+    
+    print(SUBMISSION_RETURN_BY_clean)
 
     data={"ID":unicode(ID), \
           "Url":unicode(url),\
