@@ -44,9 +44,9 @@ def get_numpages(url):
 def suittext(text):
     text=text.replace(", ,","")
     text=text.replace("'","")
-    text=text.replace("\\n","")
+    text=text.replace("\\n"," ")
     text=text.replace("  ","")
-    text=text.replace("\\r","")
+    text=text.replace("\\r"," ")
     text=text.replace("[","")
     text=text.replace("]","")
     return text
@@ -81,7 +81,6 @@ def Detail_left_fc(htmltext):
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
-    Description=Description.strip('u')
     return Description
 
 def Description_awarded(htmltext):
@@ -93,7 +92,6 @@ def Description_awarded(htmltext):
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
-    Description=Description.strip('u')
     return Description
 
 
