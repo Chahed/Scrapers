@@ -116,13 +116,13 @@ def date(dat):
 def dateClean(dat):
     d=dat.split(" ")
     months = dict()
-    months = { 'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10', 'November':'11', 'December':'12' }
+    months = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December' }
     date = d[2] + "-" + months[d[1]] + "-" + d[0]
     return date
 
 
 
-def scrap_live(url,Id):
+def scrap_live(url):
     response = urlopen(url)
     htmltext = BeautifulSoup(response)
 
@@ -156,7 +156,7 @@ def scrap_live(url,Id):
     DOCUMENT_AVAILABLE_UNTIL_clean=dateClean(BeautifulSoup(Document[0].getText()).text)
     SUBMISSION_RETURN_BY_clean= dateClean(BeautifulSoup(Document[1].getText()).text)
 
-    data={"Id":unicode(Id), \
+    data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
           "Title":unicode(Title),\
@@ -182,12 +182,12 @@ def scrap_live(url,Id):
           "Date Awarded":unicode(),\
           "Date Awarded Clean":unicode(),\
           "Awarded To":unicode()}
-    scraperwiki.sqlite.save(unique_keys=['Id'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
 
 
-def scrap_awarded(url,Id):
+def scrap_awarded(url):
     response = urlopen(url)
     htmltext = BeautifulSoup(response)
 
@@ -222,7 +222,7 @@ def scrap_awarded(url,Id):
     Awarded_to=BeautifulSoup(Awarded_to).text
     Awarded_to=suittext(Awarded_to).strip(' ')
 
-    data={"Id":unicode(Id), \
+    data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
           "Title":unicode(Title),\
@@ -248,7 +248,7 @@ def scrap_awarded(url,Id):
           "Date Awarded":unicode(Date_awarded),\
           "Date Awarded Clean":unicode(Date_awarded_clean),\
           "Awarded To":unicode(Awarded_to)}
-    scraperwiki.sqlite.save(unique_keys=['Id'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
    
@@ -256,7 +256,7 @@ def scrap_awarded(url,Id):
    
 
 
-def scrap_recurring(url,Id):
+def scrap_recurring(url):
     response = urlopen(url)
     htmltext = BeautifulSoup(response)
     ID=id_url(url)
@@ -285,7 +285,7 @@ def scrap_recurring(url,Id):
     EXISITING_CONTRACT_END_DATE= htmltext.find('div',{"class":"highlight_date_body"}).text
     EXISITING_CONTRACT_END_DATE_clean=dateClean(EXISITING_CONTRACT_END_DATE)
     
-    data={"Id":unicode(Id), \
+    data={"ID":unicode(ID), \
           "Url":unicode(url),\
           "REFERENCE":unicode(REFERENCE),\
           "Title":unicode(Title),\
@@ -311,11 +311,11 @@ def scrap_recurring(url,Id):
           "Date Awarded":unicode(""),\
           "Date Awarded Clean":unicode(),\
           "Awarded To":unicode("")}
-    scraperwiki.sqlite.save(unique_keys=['Id'], data=data)
+    scraperwiki.sqlite.save(unique_keys=['ID'], data=data)
 
 
 
-def extract_data(url,Id):
+def extract_data(url):
     l = ["live","recurring","awarded"]
     for el in l:
         urltry=url
@@ -334,27 +334,27 @@ def extract_data(url,Id):
             List= listUrl(url2)
             for j in List:
                 if el=="awarded":
-                    Id=Id+1
-                    scrap_awarded(j,Id)
+                    
+                    scrap_awarded(j)
                     print("awarded "+j)
                 else :
                     if el=="live":
-                        Id=Id+1
-                        scrap_live(j,Id)
-                        print(str(Id)+" live "+j)
+                        
+                        scrap_live(j)
+                        print(" live "+j)
                     else :
                         if el=="recurring":
-                            Id=Id+1
-                            scrap_recurring(j,Id)
+    
+                            scrap_recurring(j)
                             print("recurring "+j)
 
 
 
 def main():
-    Id=0
+    
     urls=["http://www.sourcederbyshire.co.uk/","http://www.sourceleicestershire.co.uk/","http://www.sourcelincolnshire.co.uk/","http://www.sourcenorthamptonshire.co.uk/","http://www.sourcenottinghamshire.co.uk/","http://www.sourcerutland.co.uk/","http://www.sourcecambridgeshire.co.uk/"]
     for url in urls :
-            extract_data(url,Id)
+            extract_data(url)
 
 
 
