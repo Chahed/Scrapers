@@ -139,7 +139,7 @@ def scrap_live(url):
     Contract_Type =BeautifulSoup(Table(htmltext,0)).text
     Procurement_Process =suittext(BeautifulSoup(Table(htmltext,1)).text)
     Estimated_Value_TEXT_DESCRIPTION =suittext(BeautifulSoup(Table(htmltext,2)).text)
-    Category =suittext(BeautifulSoup(Table(htmltext,3)))
+    Category =BeautifulSoup(Table(htmltext,3))
     
     CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text).strip(', ')
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
