@@ -77,7 +77,7 @@ def Detail_left_fc(htmltext):
     Detail_left=str(htmltext.find('div',{"class":"detail_left"}).contents)
     a=Detail_left.split('<h4>')
     Description=a[1].split('</h4>')
-    Description=Description[1]
+    Description=Description[1].encode('utf8')
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
@@ -88,7 +88,7 @@ def Description_awarded(htmltext):
     a=Detail_left.split('<h4>')
     Des=a[1].split('</h4>')
     Description=Des[1].split('<table class="additional_data">')
-    Description=Description[0]
+    Description=Description[0].encode('utf8')
     Description=BeautifulSoup(Description).text
     Description=Description.strip(', ')
     Description=suittext(Description)
@@ -105,7 +105,7 @@ def Contact(htmltext):
     c=Contact_Details.split('<br/>')
     m= c[0]+c[1]
     m=BeautifulSoup(m).text
-    m=suittext(m)
+    m=suittext(m.encode('utf8'))
     return m.strip(', ')
 
 def date(dat):
@@ -141,7 +141,7 @@ def scrap_live(url):
     Estimated_Value_TEXT_DESCRIPTION =suittext(BeautifulSoup(Table(htmltext,2)).text)
     Cat =suittext(Table(htmltext,3))
     Category= (BeautifulSoup(Cat).text).split(',')
-    Category=suittext(str(Category))
+    Category=suittext(str(Category).encode('utf8'))
     CPV_codes =suittext(BeautifulSoup(Table(htmltext,4)).text).strip(', ')
     Suitable_for_SME =suittext(BeautifulSoup(Table(htmltext,5)).text)
 
