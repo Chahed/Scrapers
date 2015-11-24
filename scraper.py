@@ -101,12 +101,9 @@ def Table(htmltext,id) :
     return str(Table[id])
 
 def Contact(htmltext):
-    Contact_Details= str(htmltext.find('div',{"class":"highlight_contact_bd"}).findNext('p').contents)
-    c=Contact_Details.split('<br/>')
-    m= c[0]+c[1]
-    m=BeautifulSoup(m).text
-    m=suittext(m)
-    return m.strip(', ')
+    Contact_Details= str(htmltext.find('div',{"class":"highlight_contact_bd"}).findNext('p').text)
+    
+    return Contact_Details
 
 def date(dat):
     d=dat.split(' ')
