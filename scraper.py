@@ -101,7 +101,7 @@ def Table(htmltext,id) :
     return str(Table[id])
 
 def Contact(htmltext):
-    Contact_Details=htmltext.find('div',{"class":"highlight_contact_bd"}).findNext('p').text
+    Contact_Details=htmltext.find('div',{"class":"highlight_contact_bd"}).text
     
     return Contact_Details
 
